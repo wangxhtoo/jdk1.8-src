@@ -244,10 +244,10 @@ public interface Collection<E> extends Iterable<E> {
 	 * Note that <tt>toArray(new Object[0])</tt> is identical in function to
 	 * <tt>toArray()</tt>.
 	 *
-	 * @param   <T> the runtime type of the array to contain the collection
-	 * @param a the array into which the elements of this collection are to be
-	 *          stored, if it is big enough; otherwise, a new array of the same
-	 *          runtime type is allocated for this purpose.
+	 * @param <T> the runtime type of the array to contain the collection
+	 * @param a   the array into which the elements of this collection are to be
+	 *            stored, if it is big enough; otherwise, a new array of the same
+	 *            runtime type is allocated for this purpose.
 	 * @return an array containing all of the elements in this collection
 	 * @throws ArrayStoreException  if the runtime type of the specified array is
 	 *                              not a supertype of the runtime type of every

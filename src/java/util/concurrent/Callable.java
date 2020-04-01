@@ -48,6 +48,12 @@ package java.util.concurrent;
  * <p>
  * The {@link Executors} class contains utility methods to convert from other
  * common forms to {@code Callable} classes.
+ * 
+ * 
+ * Callable与Runnalbe的区别:</br>
+ * 1、Callable接口的call()方法可以有返回值，而Runnable接口的run()方法没有返回值</br>
+ * 2、Callable接口的call()方法可以声明抛出异常，而Runnable接口的run()方法不能声明抛出异常
+ * 
  *
  * @see Executor
  * @since 1.5

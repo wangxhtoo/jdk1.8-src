@@ -38,18 +38,13 @@ package java.util.concurrent;
 import java.util.*;
 
 /**
- * Provides default implementations of {@link ExecutorService} execution
- * methods. This class implements the {@code submit}, {@code invokeAny} and
- * {@code invokeAll} methods using a {@link RunnableFuture} returned by
- * {@code newTaskFor}, which defaults to the {@link FutureTask} class provided
- * in this package. For example, the implementation of {@code submit(Runnable)}
- * creates an associated {@code RunnableFuture} that is executed and returned.
- * Subclasses may override the {@code newTaskFor} methods to return
- * {@code RunnableFuture} implementations other than {@code FutureTask}.
+ * Provides default implementations of {@link ExecutorService} execution methods. This class implements the {@code submit}, {@code invokeAny} and
+ * {@code invokeAll} methods using a {@link RunnableFuture} returned by {@code newTaskFor}, which defaults to the {@link FutureTask} class provided in
+ * this package. For example, the implementation of {@code submit(Runnable)} creates an associated {@code RunnableFuture} that is executed and
+ * returned. Subclasses may override the {@code newTaskFor} methods to return {@code RunnableFuture} implementations other than {@code FutureTask}.
  *
  * <p>
- * <b>Extension example</b>. Here is a sketch of a class that customizes
- * {@link ThreadPoolExecutor} to use a {@code CustomTask} class instead of the
+ * <b>Extension example</b>. Here is a sketch of a class that customizes {@link ThreadPoolExecutor} to use a {@code CustomTask} class instead of the
  * default {@code FutureTask}:
  * 
  * <pre>
@@ -79,8 +74,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
 	 * @param runnable the runnable task being wrapped
 	 * @param value    the default value for the returned future
 	 * @param <T>      the type of the given value
-	 * @return a {@code RunnableFuture} which, when run, will run the underlying
-	 *         runnable and which, as a {@code Future}, will yield the given value
+	 * @return a {@code RunnableFuture} which, when run, will run the underlying runnable and which, as a {@code Future}, will yield the given value
 	 *         as its result and provide for cancellation of the underlying task
 	 * @since 1.6
 	 */
@@ -93,10 +87,8 @@ public abstract class AbstractExecutorService implements ExecutorService {
 	 *
 	 * @param callable the callable task being wrapped
 	 * @param <T>      the type of the callable's result
-	 * @return a {@code RunnableFuture} which, when run, will call the underlying
-	 *         callable and which, as a {@code Future}, will yield the callable's
-	 *         result as its result and provide for cancellation of the underlying
-	 *         task
+	 * @return a {@code RunnableFuture} which, when run, will call the underlying callable and which, as a {@code Future}, will yield the callable's
+	 *         result as its result and provide for cancellation of the underlying task
 	 * @since 1.6
 	 */
 	protected <T> RunnableFuture<T> newTaskFor(Callable<T> callable) {
@@ -253,8 +245,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
 		}
 	}
 
-	public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit)
-			throws InterruptedException {
+	public <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks, long timeout, TimeUnit unit) throws InterruptedException {
 		if (tasks == null)
 			throw new NullPointerException();
 		long nanos = unit.toNanos(timeout);

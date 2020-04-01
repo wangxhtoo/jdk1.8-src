@@ -30,6 +30,9 @@ import java.util.Objects;
  * Represents an operation that accepts a single input argument and returns no
  * result. Unlike most other functional interfaces, {@code Consumer} is expected
  * to operate via side-effects.
+ * 表示接受单个输入参数但不返回结果的操作。与大多数其他功能接口不同，{@code Consumer}预期通过副作用进行操作。
+ * 
+ * 
  *
  * <p>
  * This is a <a href="package-summary.html">functional interface</a> whose

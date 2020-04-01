@@ -172,6 +172,11 @@ import java.util.Date;
  * to an interrupt over normal method return. This is true even if it can be
  * shown that the interrupt occurred after another action that may have
  * unblocked the thread. An implementation should document this behavior.
+ * 
+ * 
+ * Condition接口可作为wait/notify的替代品来实现等待通知。它为解决过早唤醒问题提供了支持，
+ * 并解决了Object.wait(long)不能区分其返回是否是由等待超时而导致的问题。
+ * 
  *
  * @since 1.5
  * @author Doug Lea

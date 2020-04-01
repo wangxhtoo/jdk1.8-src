@@ -37,96 +37,64 @@ import java.util.function.Function;
 import sun.misc.SharedSecrets;
 
 /**
- * Hash table based implementation of the <tt>Map</tt> interface. This
- * implementation provides all of the optional map operations, and permits
- * <tt>null</tt> values and the <tt>null</tt> key. (The <tt>HashMap</tt> class
- * is roughly equivalent to <tt>Hashtable</tt>, except that it is unsynchronized
- * and permits nulls.) This class makes no guarantees as to the order of the
- * map; in particular, it does not guarantee that the order will remain constant
- * over time.
+ * Hash table based implementation of the <tt>Map</tt> interface. This implementation provides all of the optional map operations, and permits
+ * <tt>null</tt> values and the <tt>null</tt> key. (The <tt>HashMap</tt> class is roughly equivalent to <tt>Hashtable</tt>, except that it is
+ * unsynchronized and permits nulls.) This class makes no guarantees as to the order of the map; in particular, it does not guarantee that the order
+ * will remain constant over time.
  *
  * <p>
- * This implementation provides constant-time performance for the basic
- * operations (<tt>get</tt> and <tt>put</tt>), assuming the hash function
- * disperses the elements properly among the buckets. Iteration over collection
- * views requires time proportional to the "capacity" of the <tt>HashMap</tt>
- * instance (the number of buckets) plus its size (the number of key-value
- * mappings). Thus, it's very important not to set the initial capacity too high
- * (or the load factor too low) if iteration performance is important.
+ * This implementation provides constant-time performance for the basic operations (<tt>get</tt> and <tt>put</tt>), assuming the hash function
+ * disperses the elements properly among the buckets. Iteration over collection views requires time proportional to the "capacity" of the
+ * <tt>HashMap</tt> instance (the number of buckets) plus its size (the number of key-value mappings). Thus, it's very important not to set the
+ * initial capacity too high (or the load factor too low) if iteration performance is important.
  *
  * <p>
- * An instance of <tt>HashMap</tt> has two parameters that affect its
- * performance: <i>initial capacity</i> and <i>load factor</i>. The
- * <i>capacity</i> is the number of buckets in the hash table, and the initial
- * capacity is simply the capacity at the time the hash table is created. The
- * <i>load factor</i> is a measure of how full the hash table is allowed to get
- * before its capacity is automatically increased. When the number of entries in
- * the hash table exceeds the product of the load factor and the current
- * capacity, the hash table is <i>rehashed</i> (that is, internal data
- * structures are rebuilt) so that the hash table has approximately twice the
- * number of buckets.
+ * An instance of <tt>HashMap</tt> has two parameters that affect its performance: <i>initial capacity</i> and <i>load factor</i>. The <i>capacity</i>
+ * is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created. The <i>load
+ * factor</i> is a measure of how full the hash table is allowed to get before its capacity is automatically increased. When the number of entries in
+ * the hash table exceeds the product of the load factor and the current capacity, the hash table is <i>rehashed</i> (that is, internal data
+ * structures are rebuilt) so that the hash table has approximately twice the number of buckets.
  *
  * <p>
- * As a general rule, the default load factor (.75) offers a good tradeoff
- * between time and space costs. Higher values decrease the space overhead but
- * increase the lookup cost (reflected in most of the operations of the
- * <tt>HashMap</tt> class, including <tt>get</tt> and <tt>put</tt>). The
- * expected number of entries in the map and its load factor should be taken
- * into account when setting its initial capacity, so as to minimize the number
- * of rehash operations. If the initial capacity is greater than the maximum
- * number of entries divided by the load factor, no rehash operations will ever
+ * As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs. Higher values decrease the space overhead but
+ * increase the lookup cost (reflected in most of the operations of the <tt>HashMap</tt> class, including <tt>get</tt> and <tt>put</tt>). The expected
+ * number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of
+ * rehash operations. If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever
  * occur.
  *
  * <p>
- * If many mappings are to be stored in a <tt>HashMap</tt> instance, creating it
- * with a sufficiently large capacity will allow the mappings to be stored more
- * efficiently than letting it perform automatic rehashing as needed to grow the
- * table. Note that using many keys with the same {@code hashCode()} is a sure
- * way to slow down performance of any hash table. To ameliorate impact, when
- * keys are {@link Comparable}, this class may use comparison order among keys
- * to help break ties.
+ * If many mappings are to be stored in a <tt>HashMap</tt> instance, creating it with a sufficiently large capacity will allow the mappings to be
+ * stored more efficiently than letting it perform automatic rehashing as needed to grow the table. Note that using many keys with the same
+ * {@code hashCode()} is a sure way to slow down performance of any hash table. To ameliorate impact, when keys are {@link Comparable}, this class may
+ * use comparison order among keys to help break ties.
  *
  * <p>
- * <strong>Note that this implementation is not synchronized.</strong> If
- * multiple threads access a hash map concurrently, and at least one of the
- * threads modifies the map structurally, it <i>must</i> be synchronized
- * externally. (A structural modification is any operation that adds or deletes
- * one or more mappings; merely changing the value associated with a key that an
- * instance already contains is not a structural modification.) This is
- * typically accomplished by synchronizing on some object that naturally
- * encapsulates the map.
+ * <strong>Note that this implementation is not synchronized.</strong> If multiple threads access a hash map concurrently, and at least one of the
+ * threads modifies the map structurally, it <i>must</i> be synchronized externally. (A structural modification is any operation that adds or deletes
+ * one or more mappings; merely changing the value associated with a key that an instance already contains is not a structural modification.) This is
+ * typically accomplished by synchronizing on some object that naturally encapsulates the map.
  *
- * If no such object exists, the map should be "wrapped" using the
- * {@link Collections#synchronizedMap Collections.synchronizedMap} method. This
- * is best done at creation time, to prevent accidental unsynchronized access to
- * the map:
+ * If no such object exists, the map should be "wrapped" using the {@link Collections#synchronizedMap Collections.synchronizedMap} method. This is
+ * best done at creation time, to prevent accidental unsynchronized access to the map:
  * 
  * <pre>
  *   Map m = Collections.synchronizedMap(new HashMap(...));
  * </pre>
  *
  * <p>
- * The iterators returned by all of this class's "collection view methods" are
- * <i>fail-fast</i>: if the map is structurally modified at any time after the
- * iterator is created, in any way except through the iterator's own
- * <tt>remove</tt> method, the iterator will throw a
- * {@link ConcurrentModificationException}. Thus, in the face of concurrent
- * modification, the iterator fails quickly and cleanly, rather than risking
+ * The iterators returned by all of this class's "collection view methods" are <i>fail-fast</i>: if the map is structurally modified at any time after
+ * the iterator is created, in any way except through the iterator's own <tt>remove</tt> method, the iterator will throw a
+ * {@link ConcurrentModificationException}. Thus, in the face of concurrent modification, the iterator fails quickly and cleanly, rather than risking
  * arbitrary, non-deterministic behavior at an undetermined time in the future.
  *
  * <p>
- * Note that the fail-fast behavior of an iterator cannot be guaranteed as it
- * is, generally speaking, impossible to make any hard guarantees in the
- * presence of unsynchronized concurrent modification. Fail-fast iterators throw
- * <tt>ConcurrentModificationException</tt> on a best-effort basis. Therefore,
- * it would be wrong to write a program that depended on this exception for its
- * correctness: <i>the fail-fast behavior of iterators should be used only to
- * detect bugs.</i>
+ * Note that the fail-fast behavior of an iterator cannot be guaranteed as it is, generally speaking, impossible to make any hard guarantees in the
+ * presence of unsynchronized concurrent modification. Fail-fast iterators throw <tt>ConcurrentModificationException</tt> on a best-effort basis.
+ * Therefore, it would be wrong to write a program that depended on this exception for its correctness: <i>the fail-fast behavior of iterators should
+ * be used only to detect bugs.</i>
  *
  * <p>
- * This class is a member of the
- * <a href="{@docRoot}/../technotes/guides/collections/index.html"> Java
- * Collections Framework</a>.
+ * This class is a member of the <a href="{@docRoot}/../technotes/guides/collections/index.html"> Java Collections Framework</a>.
  *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
@@ -149,71 +117,46 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	/*
 	 * Implementation notes.
 	 *
-	 * This map usually acts as a binned (bucketed) hash table, but when bins get
-	 * too large, they are transformed into bins of TreeNodes, each structured
-	 * similarly to those in java.util.TreeMap. Most methods try to use normal bins,
-	 * but relay to TreeNode methods when applicable (simply by checking instanceof
-	 * a node). Bins of TreeNodes may be traversed and used like any others, but
-	 * additionally support faster lookup when overpopulated. However, since the
-	 * vast majority of bins in normal use are not overpopulated, checking for
-	 * existence of tree bins may be delayed in the course of table methods.
+	 * This map usually acts as a binned (bucketed) hash table, but when bins get too large, they are transformed into bins of TreeNodes, each
+	 * structured similarly to those in java.util.TreeMap. Most methods try to use normal bins, but relay to TreeNode methods when applicable (simply
+	 * by checking instanceof a node). Bins of TreeNodes may be traversed and used like any others, but additionally support faster lookup when
+	 * overpopulated. However, since the vast majority of bins in normal use are not overpopulated, checking for existence of tree bins may be delayed
+	 * in the course of table methods.
 	 *
-	 * Tree bins (i.e., bins whose elements are all TreeNodes) are ordered primarily
-	 * by hashCode, but in the case of ties, if two elements are of the same
-	 * "class C implements Comparable<C>", type then their compareTo method is used
-	 * for ordering. (We conservatively check generic types via reflection to
-	 * validate this -- see method comparableClassFor). The added complexity of tree
-	 * bins is worthwhile in providing worst-case O(log n) operations when keys
-	 * either have distinct hashes or are orderable, Thus, performance degrades
-	 * gracefully under accidental or malicious usages in which hashCode() methods
-	 * return values that are poorly distributed, as well as those in which many
-	 * keys share a hashCode, so long as they are also Comparable. (If neither of
-	 * these apply, we may waste about a factor of two in time and space compared to
-	 * taking no precautions. But the only known cases stem from poor user
-	 * programming practices that are already so slow that this makes little
-	 * difference.)
+	 * Tree bins (i.e., bins whose elements are all TreeNodes) are ordered primarily by hashCode, but in the case of ties, if two elements are of the
+	 * same "class C implements Comparable<C>", type then their compareTo method is used for ordering. (We conservatively check generic types via
+	 * reflection to validate this -- see method comparableClassFor). The added complexity of tree bins is worthwhile in providing worst-case O(log n)
+	 * operations when keys either have distinct hashes or are orderable, Thus, performance degrades gracefully under accidental or malicious usages
+	 * in which hashCode() methods return values that are poorly distributed, as well as those in which many keys share a hashCode, so long as they
+	 * are also Comparable. (If neither of these apply, we may waste about a factor of two in time and space compared to taking no precautions. But
+	 * the only known cases stem from poor user programming practices that are already so slow that this makes little difference.)
 	 *
-	 * Because TreeNodes are about twice the size of regular nodes, we use them only
-	 * when bins contain enough nodes to warrant use (see TREEIFY_THRESHOLD). And
-	 * when they become too small (due to removal or resizing) they are converted
-	 * back to plain bins. In usages with well-distributed user hashCodes, tree bins
-	 * are rarely used. Ideally, under random hashCodes, the frequency of nodes in
-	 * bins follows a Poisson distribution
-	 * (http://en.wikipedia.org/wiki/Poisson_distribution) with a parameter of about
-	 * 0.5 on average for the default resizing threshold of 0.75, although with a
-	 * large variance because of resizing granularity. Ignoring variance, the
-	 * expected occurrences of list size k are (exp(-0.5) * pow(0.5, k) /
-	 * factorial(k)). The first values are:
+	 * Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use (see
+	 * TREEIFY_THRESHOLD). And when they become too small (due to removal or resizing) they are converted back to plain bins. In usages with
+	 * well-distributed user hashCodes, tree bins are rarely used. Ideally, under random hashCodes, the frequency of nodes in bins follows a Poisson
+	 * distribution (http://en.wikipedia.org/wiki/Poisson_distribution) with a parameter of about 0.5 on average for the default resizing threshold of
+	 * 0.75, although with a large variance because of resizing granularity. Ignoring variance, the expected occurrences of list size k are (exp(-0.5)
+	 * * pow(0.5, k) / factorial(k)). The first values are:
 	 *
-	 * 0: 0.60653066 1: 0.30326533 2: 0.07581633 3: 0.01263606 4: 0.00157952 5:
-	 * 0.00015795 6: 0.00001316 7: 0.00000094 8: 0.00000006 more: less than 1 in ten
-	 * million
+	 * 0: 0.60653066 1: 0.30326533 2: 0.07581633 3: 0.01263606 4: 0.00157952 5: 0.00015795 6: 0.00001316 7: 0.00000094 8: 0.00000006 more: less than 1
+	 * in ten million
 	 *
-	 * The root of a tree bin is normally its first node. However, sometimes
-	 * (currently only upon Iterator.remove), the root might be elsewhere, but can
-	 * be recovered following parent links (method TreeNode.root()).
+	 * The root of a tree bin is normally its first node. However, sometimes (currently only upon Iterator.remove), the root might be elsewhere, but
+	 * can be recovered following parent links (method TreeNode.root()).
 	 *
-	 * All applicable internal methods accept a hash code as an argument (as
-	 * normally supplied from a public method), allowing them to call each other
-	 * without recomputing user hashCodes. Most internal methods also accept a "tab"
-	 * argument, that is normally the current table, but may be a new or old one
-	 * when resizing or converting.
+	 * All applicable internal methods accept a hash code as an argument (as normally supplied from a public method), allowing them to call each other
+	 * without recomputing user hashCodes. Most internal methods also accept a "tab" argument, that is normally the current table, but may be a new or
+	 * old one when resizing or converting.
 	 *
-	 * When bin lists are treeified, split, or untreeified, we keep them in the same
-	 * relative access/traversal order (i.e., field Node.next) to better preserve
-	 * locality, and to slightly simplify handling of splits and traversals that
-	 * invoke iterator.remove. When using comparators on insertion, to keep a total
-	 * ordering (or as close as is required here) across rebalancings, we compare
-	 * classes and identityHashCodes as tie-breakers.
+	 * When bin lists are treeified, split, or untreeified, we keep them in the same relative access/traversal order (i.e., field Node.next) to better
+	 * preserve locality, and to slightly simplify handling of splits and traversals that invoke iterator.remove. When using comparators on insertion,
+	 * to keep a total ordering (or as close as is required here) across rebalancings, we compare classes and identityHashCodes as tie-breakers.
 	 *
-	 * The use and transitions among plain vs tree modes is complicated by the
-	 * existence of subclass LinkedHashMap. See below for hook methods defined to be
-	 * invoked upon insertion, removal and access that allow LinkedHashMap internals
-	 * to otherwise remain independent of these mechanics. (This also requires that
-	 * a map instance be passed to some utility methods that may create new nodes.)
+	 * The use and transitions among plain vs tree modes is complicated by the existence of subclass LinkedHashMap. See below for hook methods defined
+	 * to be invoked upon insertion, removal and access that allow LinkedHashMap internals to otherwise remain independent of these mechanics. (This
+	 * also requires that a map instance be passed to some utility methods that may create new nodes.)
 	 *
-	 * The concurrent-programming-like SSA-based coding style helps avoid aliasing
-	 * errors amid all of the twisty pointer operations.
+	 * The concurrent-programming-like SSA-based coding style helps avoid aliasing errors amid all of the twisty pointer operations.
 	 */
 
 	/**
@@ -222,8 +165,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16
 
 	/**
-	 * The maximum capacity, used if a higher value is implicitly specified by
-	 * either of the constructors with arguments. MUST be a power of two <= 1<<30.
+	 * The maximum capacity, used if a higher value is implicitly specified by either of the constructors with arguments. MUST be a power of two <=
+	 * 1<<30.
 	 */
 	static final int MAXIMUM_CAPACITY = 1 << 30;
 
@@ -233,32 +176,26 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
 	/**
-	 * The bin count threshold for using a tree rather than list for a bin. Bins are
-	 * converted to trees when adding an element to a bin with at least this many
-	 * nodes. The value must be greater than 2 and should be at least 8 to mesh with
-	 * assumptions in tree removal about conversion back to plain bins upon
-	 * shrinkage.
+	 * The bin count threshold for using a tree rather than list for a bin. Bins are converted to trees when adding an element to a bin with at least
+	 * this many nodes. The value must be greater than 2 and should be at least 8 to mesh with assumptions in tree removal about conversion back to
+	 * plain bins upon shrinkage.
 	 */
 	static final int TREEIFY_THRESHOLD = 8;
 
 	/**
-	 * The bin count threshold for untreeifying a (split) bin during a resize
-	 * operation. Should be less than TREEIFY_THRESHOLD, and at most 6 to mesh with
-	 * shrinkage detection under removal.
+	 * The bin count threshold for untreeifying a (split) bin during a resize operation. Should be less than TREEIFY_THRESHOLD, and at most 6 to mesh
+	 * with shrinkage detection under removal.
 	 */
 	static final int UNTREEIFY_THRESHOLD = 6;
 
 	/**
-	 * The smallest table capacity for which bins may be treeified. (Otherwise the
-	 * table is resized if too many nodes in a bin.) Should be at least 4 *
-	 * TREEIFY_THRESHOLD to avoid conflicts between resizing and treeification
-	 * thresholds.
+	 * The smallest table capacity for which bins may be treeified. (Otherwise the table is resized if too many nodes in a bin.) Should be at least 4
+	 * * TREEIFY_THRESHOLD to avoid conflicts between resizing and treeification thresholds.
 	 */
 	static final int MIN_TREEIFY_CAPACITY = 64;
 
 	/**
-	 * Basic hash bin node, used for most entries. (See below for TreeNode subclass,
-	 * and in LinkedHashMap for its Entry subclass.)
+	 * Basic hash bin node, used for most entries. (See below for TreeNode subclass, and in LinkedHashMap for its Entry subclass.)
 	 */
 	static class Node<K, V> implements Map.Entry<K, V> {
 		final int hash;
@@ -310,17 +247,12 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	/* ---------------- Static utilities -------------- */
 
 	/**
-	 * Computes key.hashCode() and spreads (XORs) higher bits of hash to lower.
-	 * Because the table uses power-of-two masking, sets of hashes that vary only in
-	 * bits above the current mask will always collide. (Among known examples are
-	 * sets of Float keys holding consecutive whole numbers in small tables.) So we
-	 * apply a transform that spreads the impact of higher bits downward. There is a
-	 * tradeoff between speed, utility, and quality of bit-spreading. Because many
-	 * common sets of hashes are already reasonably distributed (so don't benefit
-	 * from spreading), and because we use trees to handle large sets of collisions
-	 * in bins, we just XOR some shifted bits in the cheapest possible way to reduce
-	 * systematic lossage, as well as to incorporate impact of the highest bits that
-	 * would otherwise never be used in index calculations because of table bounds.
+	 * Computes key.hashCode() and spreads (XORs) higher bits of hash to lower. Because the table uses power-of-two masking, sets of hashes that vary
+	 * only in bits above the current mask will always collide. (Among known examples are sets of Float keys holding consecutive whole numbers in
+	 * small tables.) So we apply a transform that spreads the impact of higher bits downward. There is a tradeoff between speed, utility, and quality
+	 * of bit-spreading. Because many common sets of hashes are already reasonably distributed (so don't benefit from spreading), and because we use
+	 * trees to handle large sets of collisions in bins, we just XOR some shifted bits in the cheapest possible way to reduce systematic lossage, as
+	 * well as to incorporate impact of the highest bits that would otherwise never be used in index calculations because of table bounds.
 	 */
 	static final int hash(Object key) {
 		int h;
@@ -328,8 +260,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns x's Class if it is of the form "class C implements Comparable<C>",
-	 * else null.
+	 * Returns x's Class if it is of the form "class C implements Comparable<C>", else null.
 	 */
 	static Class<?> comparableClassFor(Object x) {
 		if (x instanceof Comparable) {
@@ -341,8 +272,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 				return c;
 			if ((ts = c.getGenericInterfaces()) != null) {
 				for (int i = 0; i < ts.length; ++i) {
-					if (((t = ts[i]) instanceof ParameterizedType)
-							&& ((p = (ParameterizedType) t).getRawType() == Comparable.class)
+					if (((t = ts[i]) instanceof ParameterizedType) && ((p = (ParameterizedType) t).getRawType() == Comparable.class)
 							&& (as = p.getActualTypeArguments()) != null && as.length == 1 && as[0] == c) // type arg is
 																											// c
 						return c;
@@ -353,8 +283,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns k.compareTo(x) if x matches kc (k's screened comparable class), else
-	 * 0.
+	 * Returns k.compareTo(x) if x matches kc (k's screened comparable class), else 0.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" }) // for cast to Comparable
 	static int compareComparables(Class<?> kc, Object k, Object x) {
@@ -377,16 +306,13 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	/* ---------------- Fields -------------- */
 
 	/**
-	 * The table, initialized on first use, and resized as necessary. When
-	 * allocated, length is always a power of two. (We also tolerate length zero in
-	 * some operations to allow bootstrapping mechanics that are currently not
-	 * needed.)
+	 * The table, initialized on first use, and resized as necessary. When allocated, length is always a power of two. (We also tolerate length zero
+	 * in some operations to allow bootstrapping mechanics that are currently not needed.)
 	 */
 	transient Node<K, V>[] table;
 
 	/**
-	 * Holds cached entrySet(). Note that AbstractMap fields are used for keySet()
-	 * and values().
+	 * Holds cached entrySet(). Note that AbstractMap fields are used for keySet() and values().
 	 */
 	transient Set<Map.Entry<K, V>> entrySet;
 
@@ -396,11 +322,9 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	transient int size;
 
 	/**
-	 * The number of times this HashMap has been structurally modified Structural
-	 * modifications are those that change the number of mappings in the HashMap or
-	 * otherwise modify its internal structure (e.g., rehash). This field is used to
-	 * make iterators on Collection-views of the HashMap fail-fast. (See
-	 * ConcurrentModificationException).
+	 * The number of times this HashMap has been structurally modified Structural modifications are those that change the number of mappings in the
+	 * HashMap or otherwise modify its internal structure (e.g., rehash). This field is used to make iterators on Collection-views of the HashMap
+	 * fail-fast. (See ConcurrentModificationException).
 	 */
 	transient int modCount;
 
@@ -425,13 +349,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	/* ---------------- Public operations -------------- */
 
 	/**
-	 * Constructs an empty <tt>HashMap</tt> with the specified initial capacity and
-	 * load factor.
+	 * Constructs an empty <tt>HashMap</tt> with the specified initial capacity and load factor.
 	 *
 	 * @param initialCapacity the initial capacity
 	 * @param loadFactor      the load factor
-	 * @throws IllegalArgumentException if the initial capacity is negative or the
-	 *                                  load factor is nonpositive
+	 * @throws IllegalArgumentException if the initial capacity is negative or the load factor is nonpositive
 	 */
 	public HashMap(int initialCapacity, float loadFactor) {
 		if (initialCapacity < 0)
@@ -445,8 +367,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Constructs an empty <tt>HashMap</tt> with the specified initial capacity and
-	 * the default load factor (0.75).
+	 * Constructs an empty <tt>HashMap</tt> with the specified initial capacity and the default load factor (0.75).
 	 *
 	 * @param initialCapacity the initial capacity.
 	 * @throws IllegalArgumentException if the initial capacity is negative.
@@ -456,18 +377,15 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Constructs an empty <tt>HashMap</tt> with the default initial capacity (16)
-	 * and the default load factor (0.75).
+	 * Constructs an empty <tt>HashMap</tt> with the default initial capacity (16) and the default load factor (0.75).
 	 */
 	public HashMap() {
 		this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
 	}
 
 	/**
-	 * Constructs a new <tt>HashMap</tt> with the same mappings as the specified
-	 * <tt>Map</tt>. The <tt>HashMap</tt> is created with default load factor (0.75)
-	 * and an initial capacity sufficient to hold the mappings in the specified
-	 * <tt>Map</tt>.
+	 * Constructs a new <tt>HashMap</tt> with the same mappings as the specified <tt>Map</tt>. The <tt>HashMap</tt> is created with default load
+	 * factor (0.75) and an initial capacity sufficient to hold the mappings in the specified <tt>Map</tt>.
 	 *
 	 * @param m the map whose mappings are to be placed in this map
 	 * @throws NullPointerException if the specified map is null
@@ -481,8 +399,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	 * Implements Map.putAll and Map constructor
 	 *
 	 * @param m     the map
-	 * @param evict false when initially constructing this map, else true (relayed
-	 *              to method afterNodeInsertion).
+	 * @param evict false when initially constructing this map, else true (relayed to method afterNodeInsertion).
 	 */
 	final void putMapEntries(Map<? extends K, ? extends V> m, boolean evict) {
 		int s = m.size();
@@ -521,20 +438,15 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns the value to which the specified key is mapped, or {@code null} if
-	 * this map contains no mapping for the key.
+	 * Returns the value to which the specified key is mapped, or {@code null} if this map contains no mapping for the key.
 	 *
 	 * <p>
-	 * More formally, if this map contains a mapping from a key {@code k} to a value
-	 * {@code v} such that {@code (key==null ? k==null :
-	 * key.equals(k))}, then this method returns {@code v}; otherwise it returns
-	 * {@code null}. (There can be at most one such mapping.)
+	 * More formally, if this map contains a mapping from a key {@code k} to a value {@code v} such that {@code (key==null ? k==null :
+	 * key.equals(k))}, then this method returns {@code v}; otherwise it returns {@code null}. (There can be at most one such mapping.)
 	 *
 	 * <p>
-	 * A return value of {@code null} does not <i>necessarily</i> indicate that the
-	 * map contains no mapping for the key; it's also possible that the map
-	 * explicitly maps the key to {@code null}. The {@link #containsKey containsKey}
-	 * operation may be used to distinguish these two cases.
+	 * A return value of {@code null} does not <i>necessarily</i> indicate that the map contains no mapping for the key; it's also possible that the
+	 * map explicitly maps the key to {@code null}. The {@link #containsKey containsKey} operation may be used to distinguish these two cases.
 	 *
 	 * @see #put(Object, Object)
 	 */
@@ -582,15 +494,13 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Associates the specified value with the specified key in this map. If the map
-	 * previously contained a mapping for the key, the old value is replaced.
+	 * Associates the specified value with the specified key in this map. If the map previously contained a mapping for the key, the old value is
+	 * replaced.
 	 *
 	 * @param key   key with which the specified value is to be associated
 	 * @param value value to be associated with the specified key
-	 * @return the previous value associated with <tt>key</tt>, or <tt>null</tt> if
-	 *         there was no mapping for <tt>key</tt>. (A <tt>null</tt> return can
-	 *         also indicate that the map previously associated <tt>null</tt> with
-	 *         <tt>key</tt>.)
+	 * @return the previous value associated with <tt>key</tt>, or <tt>null</tt> if there was no mapping for <tt>key</tt>. (A <tt>null</tt> return can
+	 *         also indicate that the map previously associated <tt>null</tt> with <tt>key</tt>.)
 	 */
 	public V put(K key, V value) {
 		return putVal(hash(key), key, value, false, true);
@@ -650,10 +560,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Initializes or doubles table size. If null, allocates in accord with initial
-	 * capacity target held in field threshold. Otherwise, because we are using
-	 * power-of-two expansion, the elements from each bin must either stay at same
-	 * index, or move with a power of two offset in the new table.
+	 * Initializes or doubles table size. If null, allocates in accord with initial capacity target held in field threshold. Otherwise, because we are
+	 * using power-of-two expansion, the elements from each bin must either stay at same index, or move with a power of two offset in the new table.
 	 *
 	 * @return the table
 	 */
@@ -727,8 +635,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Replaces all linked nodes in bin at index for given hash unless table is too
-	 * small, in which case resizes instead.
+	 * Replaces all linked nodes in bin at index for given hash unless table is too small, in which case resizes instead.
 	 */
 	final void treeifyBin(Node<K, V>[] tab, int hash) {
 		int n, index;
@@ -753,9 +660,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Copies all of the mappings from the specified map to this map. These mappings
-	 * will replace any mappings that this map had for any of the keys currently in
-	 * the specified map.
+	 * Copies all of the mappings from the specified map to this map. These mappings will replace any mappings that this map had for any of the keys
+	 * currently in the specified map.
 	 *
 	 * @param m mappings to be stored in this map
 	 * @throws NullPointerException if the specified map is null
@@ -768,10 +674,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	 * Removes the mapping for the specified key from this map if present.
 	 *
 	 * @param key key whose mapping is to be removed from the map
-	 * @return the previous value associated with <tt>key</tt>, or <tt>null</tt> if
-	 *         there was no mapping for <tt>key</tt>. (A <tt>null</tt> return can
-	 *         also indicate that the map previously associated <tt>null</tt> with
-	 *         <tt>key</tt>.)
+	 * @return the previous value associated with <tt>key</tt>, or <tt>null</tt> if there was no mapping for <tt>key</tt>. (A <tt>null</tt> return can
+	 *         also indicate that the map previously associated <tt>null</tt> with <tt>key</tt>.)
 	 */
 	public V remove(Object key) {
 		Node<K, V> e;
@@ -828,8 +732,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Removes all of the mappings from this map. The map will be empty after this
-	 * call returns.
+	 * Removes all of the mappings from this map. The map will be empty after this call returns.
 	 */
 	public void clear() {
 		Node<K, V>[] tab;
@@ -842,12 +745,10 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns <tt>true</tt> if this map maps one or more keys to the specified
-	 * value.
+	 * Returns <tt>true</tt> if this map maps one or more keys to the specified value.
 	 *
 	 * @param value value whose presence in this map is to be tested
-	 * @return <tt>true</tt> if this map maps one or more keys to the specified
-	 *         value
+	 * @return <tt>true</tt> if this map maps one or more keys to the specified value
 	 */
 	public boolean containsValue(Object value) {
 		Node<K, V>[] tab;
@@ -864,15 +765,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns a {@link Set} view of the keys contained in this map. The set is
-	 * backed by the map, so changes to the map are reflected in the set, and
-	 * vice-versa. If the map is modified while an iteration over the set is in
-	 * progress (except through the iterator's own <tt>remove</tt> operation), the
-	 * results of the iteration are undefined. The set supports element removal,
-	 * which removes the corresponding mapping from the map, via the
-	 * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
-	 * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support the
-	 * <tt>add</tt> or <tt>addAll</tt> operations.
+	 * Returns a {@link Set} view of the keys contained in this map. The set is backed by the map, so changes to the map are reflected in the set, and
+	 * vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt>
+	 * operation), the results of the iteration are undefined. The set supports element removal, which removes the corresponding mapping from the map,
+	 * via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not
+	 * support the <tt>add</tt> or <tt>addAll</tt> operations.
 	 *
 	 * @return a set view of the keys contained in this map
 	 */
@@ -927,15 +824,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns a {@link Collection} view of the values contained in this map. The
-	 * collection is backed by the map, so changes to the map are reflected in the
-	 * collection, and vice-versa. If the map is modified while an iteration over
-	 * the collection is in progress (except through the iterator's own
-	 * <tt>remove</tt> operation), the results of the iteration are undefined. The
-	 * collection supports element removal, which removes the corresponding mapping
-	 * from the map, via the <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>,
-	 * <tt>removeAll</tt>, <tt>retainAll</tt> and <tt>clear</tt> operations. It does
-	 * not support the <tt>add</tt> or <tt>addAll</tt> operations.
+	 * Returns a {@link Collection} view of the values contained in this map. The collection is backed by the map, so changes to the map are reflected
+	 * in the collection, and vice-versa. If the map is modified while an iteration over the collection is in progress (except through the iterator's
+	 * own <tt>remove</tt> operation), the results of the iteration are undefined. The collection supports element removal, which removes the
+	 * corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Collection.remove</tt>, <tt>removeAll</tt>, <tt>retainAll</tt> and
+	 * <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
 	 *
 	 * @return a view of the values contained in this map
 	 */
@@ -986,16 +879,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Returns a {@link Set} view of the mappings contained in this map. The set is
-	 * backed by the map, so changes to the map are reflected in the set, and
-	 * vice-versa. If the map is modified while an iteration over the set is in
-	 * progress (except through the iterator's own <tt>remove</tt> operation, or
-	 * through the <tt>setValue</tt> operation on a map entry returned by the
-	 * iterator) the results of the iteration are undefined. The set supports
-	 * element removal, which removes the corresponding mapping from the map, via
-	 * the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
-	 * <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the
-	 * <tt>add</tt> or <tt>addAll</tt> operations.
+	 * Returns a {@link Set} view of the mappings contained in this map. The set is backed by the map, so changes to the map are reflected in the set,
+	 * and vice-versa. If the map is modified while an iteration over the set is in progress (except through the iterator's own <tt>remove</tt>
+	 * operation, or through the <tt>setValue</tt> operation on a map entry returned by the iterator) the results of the iteration are undefined. The
+	 * set supports element removal, which removes the corresponding mapping from the map, via the <tt>Iterator.remove</tt>, <tt>Set.remove</tt>,
+	 * <tt>removeAll</tt>, <tt>retainAll</tt> and <tt>clear</tt> operations. It does not support the <tt>add</tt> or <tt>addAll</tt> operations.
 	 *
 	 * @return a set view of the mappings contained in this map
 	 */
@@ -1315,8 +1203,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	// Cloning and serialization
 
 	/**
-	 * Returns a shallow copy of this <tt>HashMap</tt> instance: the keys and values
-	 * themselves are not cloned.
+	 * Returns a shallow copy of this <tt>HashMap</tt> instance: the keys and values themselves are not cloned.
 	 *
 	 * @return a shallow copy of this map
 	 */
@@ -1345,13 +1232,10 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Save the state of the <tt>HashMap</tt> instance to a stream (i.e., serialize
-	 * it).
+	 * Save the state of the <tt>HashMap</tt> instance to a stream (i.e., serialize it).
 	 *
-	 * @serialData The <i>capacity</i> of the HashMap (the length of the bucket
-	 *             array) is emitted (int), followed by the <i>size</i> (an int, the
-	 *             number of key-value mappings), followed by the key (Object) and
-	 *             value (Object) for each key-value mapping. The key-value mappings
+	 * @serialData The <i>capacity</i> of the HashMap (the length of the bucket array) is emitted (int), followed by the <i>size</i> (an int, the
+	 *             number of key-value mappings), followed by the key (Object) and value (Object) for each key-value mapping. The key-value mappings
 	 *             are emitted in no particular order.
 	 */
 	private void writeObject(java.io.ObjectOutputStream s) throws IOException {
@@ -1364,8 +1248,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	}
 
 	/**
-	 * Reconstitute the {@code HashMap} instance from a stream (i.e., deserialize
-	 * it).
+	 * Reconstitute the {@code HashMap} instance from a stream (i.e., deserialize it).
 	 */
 	private void readObject(java.io.ObjectInputStream s) throws IOException, ClassNotFoundException {
 		// Read in the threshold (ignored), loadfactor, and any hidden stuff
@@ -1518,8 +1401,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 
 		public KeySpliterator<K, V> trySplit() {
 			int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
-			return (lo >= mid || current != null) ? null
-					: new KeySpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
+			return (lo >= mid || current != null) ? null : new KeySpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
 		}
 
 		public void forEachRemaining(Consumer<? super K> action) {
@@ -1583,8 +1465,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 
 		public ValueSpliterator<K, V> trySplit() {
 			int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
-			return (lo >= mid || current != null) ? null
-					: new ValueSpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
+			return (lo >= mid || current != null) ? null : new ValueSpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
 		}
 
 		public void forEachRemaining(Consumer<? super V> action) {
@@ -1648,8 +1529,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 
 		public EntrySpliterator<K, V> trySplit() {
 			int hi = getFence(), lo = index, mid = (lo + hi) >>> 1;
-			return (lo >= mid || current != null) ? null
-					: new EntrySpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
+			return (lo >= mid || current != null) ? null : new EntrySpliterator<>(map, lo, index = mid, est >>>= 1, expectedModCount);
 		}
 
 		public void forEachRemaining(Consumer<? super Map.Entry<K, V>> action) {
@@ -1710,10 +1590,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	// LinkedHashMap support
 
 	/*
-	 * The following package-protected methods are designed to be overridden by
-	 * LinkedHashMap, but not by any other subclass. Nearly all other internal
-	 * methods are also package-protected but are declared final, so can be used by
-	 * LinkedHashMap, view classes, and HashSet.
+	 * The following package-protected methods are designed to be overridden by LinkedHashMap, but not by any other subclass. Nearly all other
+	 * internal methods are also package-protected but are declared final, so can be used by LinkedHashMap, view classes, and HashSet.
 	 */
 
 	// Create a regular (non-tree) node
@@ -1776,8 +1654,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 	// Tree bins
 
 	/**
-	 * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn extends Node)
-	 * so can be used as extension of either regular or linked node.
+	 * Entry for Tree bins. Extends LinkedHashMap.Entry (which in turn extends Node) so can be used as extension of either regular or linked node.
 	 */
 	static final class TreeNode<K, V> extends LinkedHashMap.Entry<K, V> {
 		TreeNode<K, V> parent; // red-black tree links
@@ -1827,8 +1704,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 		}
 
 		/**
-		 * Finds the node starting at root p with the given hash and key. The kc
-		 * argument caches comparableClassFor(key) upon first use comparing keys.
+		 * Finds the node starting at root p with the given hash and key. The kc argument caches comparableClassFor(key) upon first use comparing
+		 * keys.
 		 */
 		final TreeNode<K, V> find(int h, Object k, Class<?> kc) {
 			TreeNode<K, V> p = this;
@@ -1846,8 +1723,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 					p = pr;
 				else if (pr == null)
 					p = pl;
-				else if ((kc != null || (kc = comparableClassFor(k)) != null)
-						&& (dir = compareComparables(kc, k, pk)) != 0)
+				else if ((kc != null || (kc = comparableClassFor(k)) != null) && (dir = compareComparables(kc, k, pk)) != 0)
 					p = (dir < 0) ? pl : pr;
 				else if ((q = pr.find(h, k, kc)) != null)
 					return q;
@@ -1865,10 +1741,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 		}
 
 		/**
-		 * Tie-breaking utility for ordering insertions when equal hashCodes and
-		 * non-comparable. We don't require a total order, just a consistent insertion
-		 * rule to maintain equivalence across rebalancings. Tie-breaking further than
-		 * necessary simplifies testing a bit.
+		 * Tie-breaking utility for ordering insertions when equal hashCodes and non-comparable. We don't require a total order, just a consistent
+		 * insertion rule to maintain equivalence across rebalancings. Tie-breaking further than necessary simplifies testing a bit.
 		 */
 		static int tieBreakOrder(Object a, Object b) {
 			int d;
@@ -1902,8 +1776,7 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 							dir = -1;
 						else if (ph < h)
 							dir = 1;
-						else if ((kc == null && (kc = comparableClassFor(k)) == null)
-								|| (dir = compareComparables(kc, k, pk)) == 0)
+						else if ((kc == null && (kc = comparableClassFor(k)) == null) || (dir = compareComparables(kc, k, pk)) == 0)
 							dir = tieBreakOrder(k, pk);
 
 						TreeNode<K, V> xp = p;
@@ -1954,13 +1827,11 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 					dir = 1;
 				else if ((pk = p.key) == k || (k != null && k.equals(pk)))
 					return p;
-				else if ((kc == null && (kc = comparableClassFor(k)) == null)
-						|| (dir = compareComparables(kc, k, pk)) == 0) {
+				else if ((kc == null && (kc = comparableClassFor(k)) == null) || (dir = compareComparables(kc, k, pk)) == 0) {
 					if (!searched) {
 						TreeNode<K, V> q, ch;
 						searched = true;
-						if (((ch = p.left) != null && (q = ch.find(h, k, kc)) != null)
-								|| ((ch = p.right) != null && (q = ch.find(h, k, kc)) != null))
+						if (((ch = p.left) != null && (q = ch.find(h, k, kc)) != null) || ((ch = p.right) != null && (q = ch.find(h, k, kc)) != null))
 							return q;
 					}
 					dir = tieBreakOrder(k, pk);
@@ -1985,13 +1856,10 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 		}
 
 		/**
-		 * Removes the given node, that must be present before this call. This is
-		 * messier than typical red-black deletion code because we cannot swap the
-		 * contents of an interior node with a leaf successor that is pinned by "next"
-		 * pointers that are accessible independently during traversal. So instead we
-		 * swap the tree linkages. If the current tree appears to have too few nodes,
-		 * the bin is converted back to a plain bin. (The test triggers somewhere
-		 * between 2 and 6 nodes, depending on tree structure).
+		 * Removes the given node, that must be present before this call. This is messier than typical red-black deletion code because we cannot swap
+		 * the contents of an interior node with a leaf successor that is pinned by "next" pointers that are accessible independently during
+		 * traversal. So instead we swap the tree linkages. If the current tree appears to have too few nodes, the bin is converted back to a plain
+		 * bin. (The test triggers somewhere between 2 and 6 nodes, depending on tree structure).
 		 */
 		final void removeTreeNode(HashMap<K, V> map, Node<K, V>[] tab, boolean movable) {
 			int n;
@@ -2087,9 +1955,8 @@ public class HashMap<K, V> extends AbstractMap<K, V> implements Map<K, V>, Clone
 		}
 
 		/**
-		 * Splits nodes in a tree bin into lower and upper tree bins, or untreeifies if
-		 * now too small. Called only from resize; see above discussion about split bits
-		 * and indices.
+		 * Splits nodes in a tree bin into lower and upper tree bins, or untreeifies if now too small. Called only from resize; see above discussion
+		 * about split bits and indices.
 		 *
 		 * @param map   the map
 		 * @param tab   the table for recording bin heads

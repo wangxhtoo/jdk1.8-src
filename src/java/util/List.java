@@ -404,11 +404,11 @@ public interface List<E> extends Collection<E> {
 	 * @implSpec The default implementation is equivalent to, for this {@code list}:
 	 * 
 	 *           <pre>
-	 * {@code
+	 *           {@code
 	 *     final ListIterator<E> li = list.listIterator();
 	 *     while (li.hasNext()) {
 	 *         li.set(operator.apply(li.next()));
-	 *           	}
+	 *           }
 	 *           }
 	 *           </pre>
 	 *
